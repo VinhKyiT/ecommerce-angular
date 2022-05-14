@@ -1,0 +1,143 @@
+<div class="layout-home container">
+    <div class="section-banner">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                    aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="../../../assets/bg1.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="../../../assets/bg2.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="../../../assets/bg3.png" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="../../../assets/bg4.png" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="section-banner-right">
+
+        </div>
+    </div>
+    <div class="section-danhmuc">
+        <h4 class="h4-danhmuc">Danh Mục</h4>
+        <div class="list-danhmuc-product">
+            <div class="category-danhmuc">
+                <a [routerLink]="['/product', item._id]" class="category-danhmuc-detail" *ngFor="let item of thamSo.productCategory">
+                    <div class="d-flex justify-content-center">
+                        <img class="image-category-danhmuc" src="{{ item.image }}" alt="">
+                    </div>
+                    <div class="d-flex justify-content-center mt-2">{{ item.name }}</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-flash-sale">
+        <div class="d-flex justify-content-between" style="padding: 1rem;">
+            <h4 class="h4-flash-sale">
+                Flash
+                <img style="width: 25px;" src="https://frontend.tikicdn.com/_desktop-next/static/img/dealFlashIcon.svg" alt="">
+                Sale
+            </h4>
+            <a class="mt-1" style="text-decoration: none;">Xem tất cả ></a>
+        </div>
+        <div class="list-flash-sale">
+            <div class="group-flash-sale" #widgetsContent>
+                <a *ngFor="let value of thamSo.productDiscount" class="flash-sale-detail">
+                    <div [routerLink]="['/detail', value._id]" class="d-flex justify-content-center">
+                        <img class="image-flash-sale" src="{{ value.image[0] }}" alt="">
+                        <div class="title-discount">
+                            {{ value.discount }}% Giảm
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-2" style="padding: 0 .5rem;">{{ value.name }}</div>
+                    <div class="d-flex justify-content-between" style="padding: 0 .5rem;">
+                        <div class="text-danger" style="font-size: 1.1rem;"> {{ value.price | currency:'VND':'VNĐ':'1.0-0':'vi-VN' }}</div>
+                        <div><i class="fa fa-heart text-danger"></i> {{ value.like }}</div>
+                    </div>
+                </a>
+            </div>
+            <div *ngIf="scroll" class="next-flash-sale" (click)="scrollRight()">
+                <i class="fa fa-chevron-right icon-scoll"></i>
+            </div>
+            <div *ngIf="!scroll" class="prev-flash-sale" (click)="scrollLeft()">
+                <i class="fa fa-chevron-left icon-scoll"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-home-product">
+        <h3 class="title-home-product">Gợi Ý Hôm Nay</h3>
+        <div class="group-grid-product-home">
+            <a class="list-product-home" *ngFor="let item of thamSo.productHomePagination">
+                <div [routerLink]="['/detail', item._id]">
+                    <div class="d-flex justify-content-center">
+                        <img class="image-flash-sale" src="{{ item.image[0] }}" alt="">
+                        <div class="title-discount" *ngIf="item.discount !== 0">
+                            {{ item.discount }}% Giảm
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-2" style="padding: 0 .5rem;">{{ item.name }}</div>
+                    <div class="d-flex justify-content-between" style="padding: 0 1rem;">
+                        <div class="text-danger" style="font-size: 1.1rem;"> {{ item.price | currency:'VND':'VNĐ':'1.0-0':'vi-VN' }}</div>
+                        <div><i class="fa fa-heart text-danger"></i> {{ item.like }} </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="btn-xemthem-home">
+            <div class="view-continue" (click)="changePage()">
+                Xem thêm
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- <input type="file" class="form-control" (change)="uploadImage($event)">
+<button (click)="submitImage()">Xác Nhận</button> -->
+
+<!-- 
+<div *ngFor="let item of user.ticket">
+    <div *ngIf="item.status === statusTicket">{{ item.tickId }}</div>
+</div>
+
+<div>{{ user.name }} </div>
+
+<a class="btn btn-danger" (click)="handlerStatus()">Thay đổi trạng thái</a>
+<a class="btn btn-primary" (click)="handlerTicket()">Thêm Ticket</a>
+
+<div *ngFor="let item of user.coupon">
+    <div>{{ item.coupId }}</div>
+</div>
+
+<a class="btn btn-success" (click)="handlerCoupon()">Thêm Coupon</a>
+<br>
+<div *ngFor="let item of product.comments">
+    {{ item.userId }}
+</div>
+
+<a class="btn btn-success" (click)="handlerComment()">Thêm Comment</a> -->

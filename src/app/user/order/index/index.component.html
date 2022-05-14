@@ -1,0 +1,50 @@
+<div>
+    <app-query [filter]="filter" [filterOrder]="filterOrder"></app-query>
+
+    <div class="container table-responsive my-4">
+        <table class="content-product-table ">
+            <thead>
+                <th>Mã hóa đơn</th>
+                <th>Tên shop</th>
+                <th>Tổng tiền</th>
+                <th>Tình trạng</th>
+                <th>Thanh toán</th>
+                <th>Ngày đặt hàng</th>
+                <th>Ngày đặt hàng</th>
+            </thead>
+            <tbody *ngFor="let item of order;index as i;">
+                <tr>
+                    <td>{{item._id}}</td>
+                    <td>
+                        <a [routerLink]="['/shop', item.shopId._id]">{{item.shopId.name}}</a>
+                    </td>
+                    <td data-label="Tổng tiền">{{item.total|currency:'VND':'VNĐ':'1.0-0':'vi-VN'}}</td>
+                    <td data-label="Tổng tiền" [ngSwitch]="item.status">
+                        <p *ngSwitchCase="1">Đang xử lý</p>
+                        <p *ngSwitchCase="2">Đã xác nhận</p>
+                        <p *ngSwitchCase="3">Đang vận chuyển</p>
+                        <p *ngSwitchCase="4">Đã giao</p>
+                        <p *ngSwitchCase="5">Đã hủy</p>
+                    </td>
+                    <td>{{ item.payId.payment }}</td>
+                    <td>{{ item.createTime }}</td>
+
+                    <td>
+                        <div class="content-product-table-action">
+                            <button [routerLink]="['/user/order/detail/'+item._id]" class="content-product-table-btn btn-primary">Chi tiết</button>
+                        </div>
+                        <div class="content-product-table-action" *ngIf="item.status < 4 && !item.pay">
+                            <button class="content-product-table-btn btn-danger" (click)="updateStatusOrder(item,i,false)">Hủy</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-3">
+        <app-pagination [itemLength]="orderLength" [filter]="filter"></app-pagination>
+    </div>
+
+
+</div>

@@ -1,0 +1,5 @@
+<nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let link of links" [routerLink]="[link.path]" [routerLinkActive]="['active']"> {{link.name}} </a>
+</nav>
+
+<app-all *ngIf="status" [params]="links[params]" [order]="shop.order.order" [orderLength]="shop.order.total" [filter]="filter"></app-all>
